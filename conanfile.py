@@ -23,19 +23,22 @@ class LibsndfileConan(ConanFile):
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup()''')
 
-    def build(self):
+    def configure_cmake(self):
         cmake = CMake(self)
+        cmake.definitions["BUILD_SHARED_LIBS"] = True
+        cmake.definitions["BUILD_PROGRAMS"] = False
+        cmake.definitions["BUILD_EXAMPLES"] = False
+        cmake.definitions["ENABLE_CPACK"] = False
         cmake.configure(source_folder="libsndfile")
+
+        return cmake
+
+    def build(self):
+        cmake = self.configure_cmake()
         cmake.build()
 
-        # Explicit way:
-        # self.run('cmake %s/libsndfile %s'
-        #          % (self.source_folder, cmake.command_line))
-        # self.run("cmake --build . %s" % cmake.build_config)
-
     def package(self):
-        cmake = CMake(self)
-        cmake.configure(source_folder="libsndfile")
+        cmake = self.configure_cmake()
         cmake.install()
 
 #        self.copy("*.h", dst="include", src="libsndfile/src")
