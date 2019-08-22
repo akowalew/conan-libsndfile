@@ -25,6 +25,7 @@ conan_basic_setup()''')
 
     def configure_cmake(self):
         cmake = CMake(self)
+        cmake.definitions["CMAKE_CXX_FLAGS"] = "-fPIC" # Needed because of link-time errors
         cmake.definitions["BUILD_SHARED_LIBS"] = True
         cmake.definitions["BUILD_PROGRAMS"] = False
         cmake.definitions["BUILD_EXAMPLES"] = False
@@ -40,14 +41,6 @@ conan_basic_setup()''')
     def package(self):
         cmake = self.configure_cmake()
         cmake.install()
-
-#        self.copy("*.h", dst="include", src="libsndfile/src")
-#        self.copy("*.h", dst="include", src="build/src")
-#        self.copy("*libsndfile.lib", dst="lib", keep_path=False)
-#        self.copy("*.dll", dst="bin", keep_path=False)
-#        self.copy("*.so", dst="lib", keep_path=False)
-#        self.copy("*.dylib", dst="lib", keep_path=False)
-#        self.copy("*.a", dst="lib", keep_path=False)
 
     def package_info(self):
         self.cpp_info.libs = ["sndfile"]
