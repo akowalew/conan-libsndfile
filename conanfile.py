@@ -18,8 +18,8 @@ class LibsndfileConan(ConanFile):
         # This small hack might be useful to guarantee proper /MT /MD linkage
         # in MSVC if the packaged project doesn't have variables to set it
         # properly
-        tools.replace_in_file("libsndfile/CMakeLists.txt", "project(libsndfile VERSION 1.0.29)",
-                              '''project(libsndfile VERSION 1.0.29)
+        tools.replace_in_file("libsndfile/CMakeLists.txt", "project(sndfile VERSION 1.0.29)",
+                              '''project(sndfile VERSION 1.0.29)
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup()''')
 
